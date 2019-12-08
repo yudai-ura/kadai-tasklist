@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  
+  before_action :require_user_logged_in, only: [:show, :new, :create, :edit, :update, :destroy]
   
   def index
     if logged_in?
@@ -58,12 +58,6 @@ class TasksController < ApplicationController
     params.require(:task).permit(:content, :status)
   end
 
-  def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
-  end
-
-  def logged_in?
-    !!current_user
-  end
+  
 
 end
